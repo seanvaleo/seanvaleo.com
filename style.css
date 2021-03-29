@@ -38,7 +38,6 @@ body {
 	color: #000;
 }
 
-
 .app {
 	display: flex;
 	align-items: center;
@@ -77,27 +76,24 @@ a:hover {
 }
 
 @media screen and (max-width: 900px) {
-
-.header img, .content {
-	width: 90%;
-}
-
+	.content {
+		width: 90%;
+	}
 }
 
 @media screen and (max-width: 480px) {
-
-.header img, .content {
-	width: 90%;
-}
-
+	.content {
+		width: 90%;
+	}
+	.app {
+		display: block;
+	}
 }
 
 @media screen and (max-height: 700px) {
-
-.header img, .content {
-	width: 90%;
-}
-
+	.content {
+		width: 90%;
+	}
 }
 
 
