@@ -44,6 +44,7 @@ body {
 	justify-content: center;
 	max-width: 90%;
 	margin: auto;
+	padding-bottom: 20px;
 }
 
 .app img {
