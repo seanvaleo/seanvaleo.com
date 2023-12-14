@@ -4,7 +4,7 @@ body {
 
 @font-face {
 	font-family: "title font";
-	src: url(assets/music.ttf);
+	src: url(assets/handwritten.otf);
 }
 
 .header {
@@ -12,16 +12,28 @@ body {
 	margin-top: 60px;
 	text-align: center;
 	width: 100%;
-	font-size: 3.5em;
+	font-size: 9em;
 	font-family: 'title font', sans-serif;
 	color: #000000;
 }
 
+.logo {
+    text-align: center;
+    margin: auto;
+    max-width: 100%;
+}
+
+.logo img {
+    width: 500px;
+    height: auto;
+    display: block;
+    margin: auto;
+}
+
 .content {
 	margin: auto;
-	margin-top: 150px;
-	width: 50%;
-	text-align: center;
+	margin-top: 90px;
+	width: 40%;
 	font-family: 'Open Sans', sans-serif;
 	font-size: 1.15em;
 	color: #000000;
@@ -36,6 +48,16 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 1.15em;
 	color: #000;
+}
+
+.section-header {
+	font-size: 1.45em;
+	max-width: 90%;
+	display: flex;
+	max-width: 90%;
+	margin: auto;
+	padding-bottom: 10px;
+	color: #444;
 }
 
 .app {
@@ -72,29 +94,42 @@ a:hover {
 
 /*******************Devices*********************/
 
-@media screen and (max-width: 1200px) {
-
-}
-
-@media screen and (max-width: 900px) {
+/* iPhone 11 Pro - Portrait */
+@media only screen and (max-device-width: 480px) and (min-device-height: 600px) {
+    .logo img {
+        width: 90%;
+    }
 	.content {
-		width: 90%;
-	}
-}
-
-@media screen and (max-width: 480px) {
-	.content {
+        margin-top: 30px;
 		width: 90%;
 	}
 	.app {
 		display: block;
 	}
+    .app p {
+        padding-left: 0px;
+    }
 }
 
-@media screen and (max-height: 700px) {
+/* iPhone 11 Pro - Landscape */
+@media only screen and (min-device-width: 700px) and (max-device-height: 500px)  {
+	.content {
+        margin-top: 30px;
+		width: 90%;
+	}
+} 
+
+/* iPad - Portrait */
+@media only screen and (min-device-width: 760px) and (max-device-width: 1024px) and (min-device-height: 700px) {
 	.content {
 		width: 90%;
 	}
 }
 
+/* iPad - Landscape */
+@media only screen and (min-device-width: 760px) and (max-device-width: 1400px) and (min-device-height: 700px) {
+	.content {
+		width: 90%;
+	}
+}
 
