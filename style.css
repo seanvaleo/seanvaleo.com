@@ -82,6 +82,26 @@ body {
 	color: #444;
 }
 
+.para {
+	align-items: center;
+	justify-content: center;
+	max-width: 90%;
+	margin: auto;
+	padding-bottom: 20px;
+}
+
+.thumbnail {
+    height: 140px;
+    width: 140px;
+    overflow: hidden;
+}
+
+.thumbnail img {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
 a:link,
 a:visited,
 a:active, 
