@@ -50,6 +50,28 @@ body {
 	color: #000;
 }
 
+.toc {
+	font-size: 1.45em;
+	max-width: 90%;
+	margin: auto;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	color: #444;
+	text-align: center;
+}
+.toc a:link,
+.toc a:visited,
+.toc a:active {
+	color: #444;
+	text-decoration: none;
+	font-weight: normal;
+}
+.toc a:hover {
+	color: #888;
+	text-decoration: none;
+	font-weight: normal;
+}
+
 .section-header {
 	font-size: 1.45em;
 	max-width: 90%;
@@ -58,6 +80,15 @@ body {
 	margin: auto;
 	padding-bottom: 10px;
 	color: #444;
+}
+
+.section-header-big {
+	font-size: 1.6em;
+	max-width: 90%;
+	margin: auto;
+	padding-bottom: 10px;
+	color: #444;
+	text-align: center;
 }
 
 .app {
