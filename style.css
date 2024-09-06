@@ -99,16 +99,28 @@ body {
 	margin: auto;
 	padding-bottom: 20px;
 }
-
 .app img {
 	width: 230px;
 	object-fit: contain;
 	align-self: flex-start;
 }
-
 .app p {
 	flex: 1 1 auto;
 	padding-left: 30px;
+	text-align: left;
+	color: #444;
+}
+
+.txt {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 90%;
+	margin: auto;
+	padding-bottom: 20px;
+}
+.txt p {
+	flex: 1 1 auto;
 	text-align: left;
 	color: #444;
 }
