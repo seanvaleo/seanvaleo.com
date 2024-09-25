@@ -181,7 +181,7 @@ a:hover {
     .logo img {
         width: 90%;
     }
-	.content {
+	.content, .content-blog {
         margin-top: 30px;
 		width: 90%;
 	}
@@ -195,7 +195,7 @@ a:hover {
 
 /* iPhone 11 Pro - Landscape */
 @media only screen and (min-device-width: 700px) and (max-device-height: 500px)  {
-	.content {
+	.content, .content-blog {
         margin-top: 30px;
 		width: 90%;
 	}
@@ -203,14 +203,14 @@ a:hover {
 
 /* iPad - Portrait */
 @media only screen and (min-device-width: 760px) and (max-device-width: 1024px) and (min-device-height: 700px) {
-	.content {
+	.content, .content-blog {
 		width: 90%;
 	}
 }
 
 /* iPad - Landscape */
 @media only screen and (min-device-width: 760px) and (max-device-width: 1400px) and (min-device-height: 700px) {
-	.content {
+	.content, .content-blog {
 		width: 90%;
 	}
 }
