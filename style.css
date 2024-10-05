@@ -136,7 +136,7 @@ body {
 	justify-content: center;
 	max-width: 90%;
 	margin: auto;
-	padding-bottom: 20px;
+	padding-bottom: 0px;
 }
 .txt p {
 	flex: 1 1 auto;

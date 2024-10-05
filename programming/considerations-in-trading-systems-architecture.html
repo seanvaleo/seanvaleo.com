@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-153506133-1"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-153506133-1');
+		</script>
+		<title>Sean Valeo</title>
+		<meta charset='UTF-8'>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui"/>
+		<meta name="keywords" content="programming, software, engineer, quantitative, data, research, machine, learning, neural, ai, artificial, intelligence, professional, trading, banking, api, secure, exchange, cryptocurrency, forex, fx, market, arbitrage, crypto, currency, trade, trading, risk, management, analysis, statistics"/>
+		<meta name="description" content=""/>
+		<meta name="subject" content="Sean Valeo"/>
+		<meta name="copyright" content="Sean Valeo"/>
+		<meta name="url" content="http://www.seanvaleo.com"/>
+		<meta name="rating" content="General"/>
+		<link rel="stylesheet" type="text/css" href="../style.css"/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans"/>
+	</head>
+	<body>
+		<div class="header">
+            <div class="logo">
+                <a href="../index.html"><img src="../assets/seanvaleo.png"></a>
+            </div>
+        </div>
+		<div class="content-blog">
+            <div class="section-header-big">
+                <p>
+                    <a href="../index.html">Home</a> &gt; <a href="index.html">Programming</a> &gt; Considerations in Trading Systems Architecture
+                </p>
+            </div>
+			<div class="blog">
+<p>Spending time defining the architecture of a trading system before starting development will unquestionably save a lot of time in the long run. It&rsquo;s implementation will impact the system's performance, scalability, reliability, and ultimately, the profitability of the strategies.</p>
+<p>Compromises always have to be made when selecting quality attributes of a system, so identifying and prioritizing the quality attributes of your system early on is crucial.</p>
+<p>For example, will the system need to scale in deployment size, or be exceptionally fast with one set of tasks? A distributed microservices architecture can handle high volumes and offer flexibility, allowing you to co-locate with multiple trading venues and data sources in different geographical regions. Conversely, a monolithic design might be easier to deploy, and perform much faster at processing a set of instructions for when the strategy demands a fast reaction to market activity and new data.</p>
+<p>Is it better to handle all of the work in a single thread, or should multithreading be implemented, taking on the overhead of complexity, context sharing and locking but with the advantage of parallel processing. Is a hybrid approach more favorable - doing the majority of the hot path work in a single thread and using dedicated threads for the cold path, writing to a backup database for example.</p>
+<p>What happens when the exchange goes down mid-session and you need to identify possible trade discrepancies? Do you have a reliable data store and can you identify the positional risks since your last order execution acknowledgement?</p>
+<p>This article explores some important considerations in Trading Systems Architecture, helping you to navigate some of the complexities and trade-offs involved.</p>
+<br />
+<h2>Languages, Libraries, and Dependencies</h2>
+<p>You can build a trading system using any general purpose programming language, but choosing one to suit your experience level as well as the needs of the system will allow for a more frictionless development experience and at extreme levels, can affect performance. Let&rsquo;s take a look at some popular programming language and address their pro&rsquo;s and cons (somewhat opinionated).</p>
+<ul>
+<li><strong>C++:</strong> This compiled language offers top performance, an extensive native library, object-oriented features and extreme control. Its drawbacks are that it requires a build script that grows in complexity with your project (though is pretty manageable once you get going); Dependencies are awkward to build and include (but once it&rsquo;s done it&rsquo;s done); and at the minimum, you will need to evaluate and use third party libraries for handling json, http, and TLS. You&rsquo;ll likely want to roll your own queue implementation too.</li>
+<li><strong>Java</strong>: Similar properties to C++ but uses a runtime environment to handle things like memory management, with the trade off of a little (in most cases unnoticeable) performance loss.</li>
+<li><strong>Go:</strong> Easy to use, lots of native libraries with great json and web support, a built in queue feature and an excellent build and test toolchain. Its drawbacks are that it&rsquo;s a bit slower than C++, has less features than C++ and is more of a procedural rather than object-oriented language.</li>
+<li><strong>Python:</strong> Popular for its simplicity and extensive libraries, especially when it comes to machine learning, though it will have higher latency. Multithreading is awkward.</li>
+<li><strong>Pine Script:</strong> Used for scripting on the TradingView platform. Solely for writing standalone indicators or strategies &ndash; not a complete trading system.</li>
+<li><strong>MQL:</strong> Used for scripting on the MetaTrader platform. Like Pine, it&rsquo;s solely for writing standalone indicators or strategies &ndash; not a complete trading system.</li>
+</ul>
+<p>One further advantage of using a language like C++ that does not rely on a runtime environment, is that debugging can be easier due to the deterministic nature of memory management. The use of a debugger can be extremely powerful in stepping through strategy simulations throughout testing and development.</p>
+<p>Some would argue that C++ can be unsafe due to the potential for developers to mistakenly create memory leaks, but the use of smart pointers or a memory profiling tool quickly extinguish those concerns.</p>
+<br />
+<h2>Quality Attributes</h2>
+<p>Quality attributes, also known as non-functional requirements, are essential characteristics that guide the implementation of software architecture. These attributes ensure that the software not only meets functional requirements but also gives priority to the requirements of the project.</p>
+<p>Identify a handful of quality attributes that will be priorities during the development of your system, recognizing that one attribute may sometimes lead to trade-offs with others. For instance, making a system highly compatible can affect its maintainability; and making a system highly scalable could affect its performance. Here&rsquo;s a closer look at some critical quality attributes in software architecture:</p>
+<ul>
+<li><strong>Compatibility:</strong> The software is able to operate with other products that are designed for interoperability with another product. For example, a piece of software may be backward-compatible with an older version of itself.</li>
+<li><strong>Extensibility:</strong> New capabilities can be added to the software without major changes to the underlying architecture.</li>
+<li><strong>Modularity:</strong> the resulting software comprises well defined, independent components which leads to better maintainability. The components could be then implemented and tested in isolation before being integrated to form a desired software system. This allows division of work in a software development project.</li>
+<li><strong>Fault-tolerance:</strong> The software is resistant to and able to recover from component failure.</li>
+<li><strong>Reliability: </strong>The software is able to perform a required function under stated conditions for a specified period of time.</li>
+<li><strong>Reusability: </strong>The ability to use some or all of the aspects of the preexisting software in other projects with little to no modification.</li>
+<li><strong>Robustness:</strong> The software is able to operate under stress or tolerate unpredictable or invalid input. For example, it can be designed with resilience to low memory conditions.</li>
+<li><strong>Security: </strong>The software is able to withstand and resist hostile acts and influences.</li>
+<li><strong>Usability:</strong> The software user interface must be easy to understand and use for its target user/audience.</li>
+<li><strong>Performance:</strong> The software performs its tasks within a time-frame that is acceptable for the user, and does not require too much memory.</li>
+<li><strong>Portability:</strong> The software should be usable across a number of different conditions and environments.</li>
+<li><strong>Scalability: </strong>The software adapts well to increasing data or added features or number of users</li>
+<li><strong>Availability:</strong> The software runs with almost 100% uptime and rarely experiences congestion.</li>
+</ul>
+<p>By giving due consideration to these attributes, developers can create software that stands the test of time and meets the evolving demands of users.</p>
+<p>A trading system will genererally prioritize performance, reliability, fault tolerance and extensibility. Attributes like compatibility, portability, reusability are obviously desirable but usually less important to a proprietary trading system.</p>
+<br />
+<h2>Architecture Pattern</h2>
+<p>Choosing an appropriate architectural pattern for a software project is a critical decision that can only be made after identifying priority quality attributes, and as such should be selected to best suit those requirements. Here&rsquo;s a detailed look at several common architecture patterns, along with considerations for selecting the right one for your needs.</p>
+<ul>
+<li><strong>Monolithic:</strong> Characterized by a single, unified codebase where all components are interconnected and interdependent. This pattern is often suitable for small to medium-sized applications with straightforward requirements. It offers simplicity in development and deployment, but it can become difficult to manage as the application grows. However, consider potential future scalability and maintenance challenges.</li>
+<li><strong>Peer-to-Peer (P2P):</strong> Distributes workload among peers, with each node acting as both a client and a server. This pattern is ideal for applications requiring decentralized data distribution and redundancy, such as file-sharing systems or blockchain technologies. P2P architectures provide robustness and scalability, but they can be complex to implement and manage, especially in ensuring data consistency.</li>
+<li><strong>Model-View-Controller (MVC):</strong> Separates an application into three interconnected components: Model (data), View (user interface), and Controller (business logic). This pattern promotes organized code, making it easier to manage and scale, especially in web applications. MVC is particularly beneficial for applications requiring a clear separation of concerns and where user interfaces are subject to frequent changes. It's widely used in web frameworks.</li>
+<li><strong>Broker:</strong> This pattern involves intermediaries (brokers) that manage communication between clients and servers. This pattern is suitable for distributed systems where components need to interact asynchronously and independently. It enhances scalability and flexibility by decoupling client-server interactions, making it ideal for middleware solutions, message queues, and enterprise service buses. Consider this pattern for complex integrations where components need to communicate over different networks or protocols.</li>
+<li><strong>Service-Oriented (SOA):</strong> Organizes a system as a collection of loosely coupled services that communicate over a network. Each service encapsulates a business function and is accessible via standardized interfaces. This architecture is beneficial for applications requiring interoperability across different platforms and technologies. SOA supports reusability, scalability, and maintainability, making it suitable for large, enterprise-level applications. However, it requires rigorous governance and can introduce latency from communication between services.</li>
+<li><strong>Client-Server:</strong> In a client-server architecture, clients request services, and servers provide them. This pattern is foundational for many networked applications, from web servers to database systems. It's suitable for applications where centralized data management and processing are necessary. While relatively straightforward to implement and manage, scalability can become an issue if the server becomes a bottleneck under high loads. Load balancing and replication are common strategies to mitigate this.</li>
+<li><strong>Layered Architecture:</strong> Organizes a system into hierarchical layers, each with specific responsibilities. This pattern is beneficial for creating modular, maintainable, and testable systems. It's widely used in enterprise applications and suits projects where clear separation of concerns and incremental development are priorities. However, rigid layer dependencies can sometimes lead to performance inefficiencies.</li>
+<li><strong>Pipe-Filter Architecture:</strong> Consists of a series of processing elements (filters) connected by pipes, where each filter processes data and passes it to the next. This pattern is usually ideal for applications involving data streaming, such as compilers or signal processing systems. It promotes reusability and parallel processing but can introduce complexity in managing data flow and filter synchronization. Consider this pattern for tasks requiring step-by-step transformation of data.</li>
+</ul>
+<p>It&rsquo;s fairly obvious that for the development of a client trading system, the monolothic and service-oriented architectures are the most typical approaches. But as the system grows in complexity, other patterns can start to look appealling. For example, a layered architecture might be appropriate when your system has an internal pricing model, or a pre-trade risk management component, that would likely be layerered between the API and strategy components. It&rsquo;s important to remember that a systems architecture is evolutionary, like the software itself.</p>
+<p>Carefully evaluate the trade-offs of each pattern to ensure your chosen architecture aligns with your project&rsquo;s goals and constraints.</p>
+<h3>System Components</h3>
+<p>Identify and modularize key feature components of your system (e.g., order management, risk management, market data handling). Modular design enhances maintainability and allows for independent scaling and upgrades. Even if a monolithic architecture pattern is selected for the software, modular code design is always a good idea.</p>
+<p>A simple strategy integrated into a trading suite like MetaTrader or ThinkOrSwim might only involve the strategy component and a pre-trade risk component; but a standalone client will have multiple components that need to interact in with each other. Identifying and grouping responsibilities of the software can help determine which components must exist in isolation and how interaction should be handled between them. For example, post-trade risk computation might run in parallel to the order management engine, but at times will need to interrupt normal operation.</p>
+<br />
+<h2>Tactics</h2>
+<p>Architectural tactics are a key abstraction of software architecture, supporting the systematic design and analysis of software to satisfy quality attributes. They are fundamental strategies that address common challenges in software design and directly impact the system's overall effectiveness.</p>
+<p>Giving consideration to tactics up front can help to plan for better performance, failure handling, and improved interaction between components, for example. Here are some things to think about when considering which tactics you might want to use in your system:</p>
+<ul>
+<li>Where will the latency and bottlenecks be in your system? Consider what work is being done in the hot path and if it can be moved to a cold path. Addressing latency in the hot path is critical, especially for high-frequency trading (HFT) strategies.</li>
+<li>How will your system handle an unexpected failure? Is there a fault-tolerance mechanism and has it been tested to validate that a restart will restore the correct system state? Ensure your database design supports efficient reconciliation processes to maintain data integrity and consistency, especially after failures or discrepancies. Implementing redundancy, failover mechanisms, and automated recovery procedures can minimize downtime and usually financial loss.</li>
+<li>Specific to trading systems, consider enabling the dead man's switch at the exchange to automatically halt trading in case of system failure or anomalous behavior, with the idea of protecting against catastrophic losses.</li>
+<li>Where will your system be deployed? Colocation can significantly reduce latency by placing your trading system's servers close to exchange servers. Evaluate the costs and benefits of colocation based on your latency requirements.</li>
+<li>How will your system address conflicts between different trading strategies? Consider the case that the general market exposure needs to be reduced following post-trade analysis. How does your system ensure that the correct strategy is made aware of the change to risk tolerance?</li>
+</ul>
+<br />
+<h2>Testing</h2>
+<p>Outside of typical strategy backtesting, robust system testing is critical to ensure reliability and accuracy. A good architecture will define minimum standards for testing and coverage; and might even select a testing framework.</p>
+<p>By considering the approach to testing early in the architectural design, tests will be implemented sooner, and issues can be identified and addressed early on in the development cycle. This early detection helps in reducing the cost and effort required to fix problems later. Planning to test up front also encourages a modular and loosely coupled design of system components and functions. This allows for individual components to be tested independently without needing to be refactored.</p>
+<p>It goes without saying that integration tests carry the most weight in a trading system, but unit tests on algorithms, validators and arithmetic are important, and if performance is a concern, stress or benchmark tests have their place too.</p>
+<br />
+<h2>Other Considerations</h2>
+<h4>Precision</h4>
+<p>Accurate numerical computations are crucial in financial software. Choose data types that offer the required precision to avoid rounding errors, inaccuracies; and be sure to log whenever numerical limits are approached or reached. Ensure that floating point residuals are cleaned up correctly and reconcile with exchange values.</p>
+<h4>Logging</h4>
+<p>Effective logging provides insight into system behavior and aids in troubleshooting. Implement comprehensive logging mechanisms that capture relevant data without significantly impacting performance.</p>
+<h4>Error Handling</h4>
+<p>Proper error handling prevents unnecessary crashes, enhancing the user experience by providing informative feedback and maintaining functionality. It also aids in debugging and maintenance, allowing developers to identify and fix issues more efficiently.</p>
+<br />
+<h2>Final Note</h2>
+<p>It's clear that software architecture is critical to successful trading systems development. The integrity it demands ensures that systems can meet their demands and evolve with changing requirements. By investing time and effort into a well-thought-out architectural design, engineers can preempt many potential issues, leading to more efficient and effective software solutions. Ultimately, a strong software architecture underpins the technical aspects of a project and is a key factor in its long-term success.</p>
+            </div>
+		</div>
+		<div class="footer">
+			<p>
+				<a href="../about.html">About Me</a> | 
+				<a href="https://linkedin.com/in/seanvaleo">LinkedIn</a> | 
+				<a href="https://github.com/seanvaleo">GitHub</a> | 
+				<a href="https://youtube.com/@SeanValeo">YouTube</a> | 
+				<a href="mailto:seanvaleo@outlook.com">Email</a>
+				<br />
+				Copyright 2024 &copy; Sean Valeo
+			</p>
+		</div>
+	</body>
+</html>
